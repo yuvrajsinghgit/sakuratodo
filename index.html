@@ -1,37 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sakura To-Do</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Sakura To-Do | Login</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="script.js" defer></script>
 </head>
 <body>
-  <!-- 🔐 Auth Screen -->
-  <div id="auth-screen">
-    <h2>Welcome to Sakura To-Do</h2>
+  <div class="auth-container">
+    <h2>Welcome to Sakura To-Do 🌸</h2>
     <input type="email" id="email" placeholder="Email" />
     <input type="password" id="password" placeholder="Password" />
     <button id="signupBtn">Sign Up</button>
-    <p>Already have an account? <a href="#" id="switchToLogin">Log in</a></p>
-    <button id="loginBtn" style="display: none;">Login</button>
+    <button id="loginBtn">Log In</button>
   </div>
-
-  <!-- ✅ Main App -->
-  <div class="container" id="app" style="display: none;">
-    <div class="todo_app">
-      <h2>To Do List <img src="images/icon.png" alt="icon" /></h2>
-      <div class="row">
-        <input type="text" id="input-box" placeholder="Type here..." />
-        <button onclick="addTask()">Add Task</button>
-      </div>
-      <ul id="list-container"></ul>
-      <button id="logoutBtn" style="margin-top: 20px;">Logout</button>
-    </div>
-    <br />
-    <h6>Sakura® — made in India🌏</h6>
-  </div>
-
-  <script type="module" src="script.js"></script>
 </body>
 </html>
