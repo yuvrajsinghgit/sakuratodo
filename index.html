@@ -1,61 +1,37 @@
-<!-- Login UI -->
-<div id="login-section">
-    <h2 style="color: white;">Login to Sakura To-Do</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="signIn()">Login</button>
-    <button onclick="signUp()">Sign Up</button>
-  </div>
-  
-  <!-- To-do app UI -->
-  <div id="app-section" style="display: none;">
-    <!-- Your existing todo app HTML here -->
-    <button onclick="logOut()">Logout</button>
-  </div>
-
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-    <title>Sakura To Do List App</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="apple-touch-icon" href="images/icon.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-
-
-    <!-- Firebase App -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" type="module"></script>
-    <!-- Auth -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js" type="module"></script>
-    <!-- Realtime Database -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js" type="module"></script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sakura To-Do</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-<div class="container">
+  <!-- 🔐 Auth Screen -->
+  <div id="auth-screen">
+    <h2>Welcome to Sakura To-Do</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="signupBtn">Sign Up</button>
+    <p>Already have an account? <a href="#" id="switchToLogin">Log in</a></p>
+    <button id="loginBtn" style="display: none;">Login</button>
+  </div>
+
+  <!-- ✅ Main App -->
+  <div class="container" id="app" style="display: none;">
     <div class="todo_app">
-        <h2>To Do List <img src="images/icon.png"> </h2>
-        <div class="row">
-            <input type="text" id="input-box" placeholder="Type here...">
-            <button onClick="addTask()">Add Task</button>
-        </div>
-       <ul id="list-container">
-            <!-- <li class="checked">Task A</li>
-            <li>Task B</li>
-            <li>Task C</li> -->
-        </ul> 
+      <h2>To Do List <img src="images/icon.png" alt="icon" /></h2>
+      <div class="row">
+        <input type="text" id="input-box" placeholder="Type here..." />
+        <button onclick="addTask()">Add Task</button>
+      </div>
+      <ul id="list-container"></ul>
+      <button id="logoutBtn" style="margin-top: 20px;">Logout</button>
     </div>
+    <br />
+    <h6>Sakura® — made in India🌏</h6>
+  </div>
 
-
-    <br>
-    <h6 >Sakura® 2025 — made in India🌏</h6>
-</div>
-
-<script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
-
-
-
 </html>
