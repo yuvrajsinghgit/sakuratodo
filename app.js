@@ -1,6 +1,18 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  push,
+  onValue,
+  remove,
+  update
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDltUwIwNYmL59A4cy61dCz2UBJeG-Fc5w",
@@ -21,11 +33,11 @@ const listContainer = document.getElementById("list-container");
 const addTaskBtn = document.getElementById("addTaskBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 
-let currentUser;
+let userUID = null;
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, user => {
   if (user) {
-    currentUser = user;
+    userUID = user.uid;
     loadTasks();
   } else {
     window.location.href = "index.html";
@@ -33,67 +45,51 @@ onAuthStateChanged(auth, (user) => {
 });
 
 addTaskBtn.addEventListener("click", () => {
-  if (inputBox.value === '') {
-    alert("Please type a task.");
+  if (inputBox.value.trim() === "") {
+    alert("Please type something!");
     return;
   }
-  const task = inputBox.value;
-  const li = document.createElement("li");
-  li.textContent = task;
 
-  const span = document.createElement("span");
-  span.textContent = "×";
-  li.appendChild(span);
-  listContainer.appendChild(li);
+  const taskRef = ref(db, `users/${userUID}/tasks`);
+  const newTask = {
+    text: inputBox.value,
+    checked: false
+  };
 
+  push(taskRef, newTask);
   inputBox.value = "";
-  saveTasks();
 });
-
-listContainer.addEventListener("click", (e) => {
-  if (e.target.tagName === "LI") {
-    e.target.classList.toggle("checked");
-    saveTasks();
-  } else if (e.target.tagName === "SPAN") {
-    e.target.parentElement.remove();
-    saveTasks();
-  }
-});
-
-function saveTasks() {
-  const tasks = [];
-  listContainer.querySelectorAll("li").forEach((li) => {
-    tasks.push({
-      text: li.firstChild.textContent,
-      checked: li.classList.contains("checked")
-    });
-  });
-
-  set(ref(db, "users/" + currentUser.uid + "/tasks"), tasks);
-}
 
 function loadTasks() {
-  const dbRef = ref(db);
-  get(child(dbRef, `users/${currentUser.uid}/tasks`)).then((snapshot) => {
-    if (snapshot.exists()) {
-      const tasks = snapshot.val();
-      tasks.forEach(task => {
-        const li = document.createElement("li");
-        li.textContent = task.text;
-        if (task.checked) li.classList.add("checked");
+  const taskRef = ref(db, `users/${userUID}/tasks`);
+  onValue(taskRef, snapshot => {
+    listContainer.innerHTML = "";
+    snapshot.forEach(child => {
+      const task = child.val();
+      const key = child.key;
+      const li = document.createElement("li");
+      li.textContent = task.text;
+      if (task.checked) li.classList.add("checked");
 
-        const span = document.createElement("span");
-        span.textContent = "×";
-        li.appendChild(span);
-
-        listContainer.appendChild(li);
+      li.addEventListener("click", () => {
+        update(ref(db, `users/${userUID}/tasks/${key}`), {
+          checked: !task.checked
+        });
       });
-    }
+
+      const span = document.createElement("span");
+      span.innerHTML = "\u00d7";
+      span.addEventListener("click", e => {
+        e.stopPropagation();
+        remove(ref(db, `users/${userUID}/tasks/${key}`));
+      });
+
+      li.appendChild(span);
+      listContainer.appendChild(li);
+    });
   });
 }
 
 logoutBtn.addEventListener("click", () => {
-  signOut(auth).then(() => {
-    window.location.href = "index.html";
-  });
+  signOut(auth);
 });

@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sakura To Do List</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
-  <script type="module" src="app.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sakura To Do List App</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <div class="todo_app">
-      <h2>To Do List <img src="images/icon.png"></h2>
+      <h2>
+        To Do List <img src="images/icon.png" />
+        <button id="logoutBtn" style="margin-left:auto; padding:6px 12px;">Logout</button>
+      </h2>
       <div class="row">
-        <input type="text" id="input-box" placeholder="Type here...">
+        <input type="text" id="input-box" placeholder="Type here..." />
         <button id="addTaskBtn">Add Task</button>
       </div>
       <ul id="list-container"></ul>
-      <button id="logoutBtn">Logout</button>
     </div>
-    <h6>Sakura® — made in India 🌏</h6>
+    <h6>Sakura® — made in India🌏</h6>
   </div>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
