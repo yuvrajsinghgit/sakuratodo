@@ -1,3 +1,19 @@
+<!-- Login UI -->
+<div id="login-section">
+    <h2 style="color: white;">Login to Sakura To-Do</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="signIn()">Login</button>
+    <button onclick="signUp()">Sign Up</button>
+  </div>
+  
+  <!-- To-do app UI -->
+  <div id="app-section" style="display: none;">
+    <!-- Your existing todo app HTML here -->
+    <button onclick="logOut()">Logout</button>
+  </div>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +22,15 @@
     <link rel="stylesheet" href="style.css">
     <link rel="apple-touch-icon" href="images/icon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
+
+
+    <!-- Firebase App -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" type="module"></script>
+    <!-- Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js" type="module"></script>
+    <!-- Realtime Database -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js" type="module"></script>
+
 </head>
 
 <body>
